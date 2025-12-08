@@ -16,22 +16,22 @@ const AWS_CONFIG = {
 
 const uploadDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 const localStorage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const baseName = path.basename(file.originalname, ext);
+    destination: (req, file, cb) => cb(null, "uploads/"),
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const baseName = path.basename(file.originalname, ext);
 
-    const safeName = baseName
-      .toLowerCase()
-      .replace(/\s+/g, "_")
-      .replace(/[^a-z0-9_.-]/g, "");
+        const safeName = baseName
+            .toLowerCase()
+            .replace(/\s+/g, "_")
+            .replace(/[^a-z0-9_.-]/g, "");
 
-    cb(null, `${safeName}_${Date.now()}${ext}`);
-  },
+        cb(null, `${safeName}_${Date.now()}${ext}`);
+    },
 });
 
 let storage: multer.StorageEngine = localStorage;

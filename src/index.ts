@@ -12,8 +12,7 @@ import drinkRoutes from "./routes/drink";
 import menuRoutes from "./routes/menu";
 import promotionRoutes from "./routes/promotion";
 import tableRoutes from "./routes/table";
-import incidenciaRoutes from "./routes/incidencia";
-import authRoutes from "./routes/authRoutes";
+import authRoutes from "./routes/auth";
 
 import { errorHandler } from "./middlewares/errorHandler";
 
@@ -36,7 +35,6 @@ app.use("/drinks", drinkRoutes);
 app.use("/menus", menuRoutes);
 app.use("/promotions", promotionRoutes);
 app.use("/tables", tableRoutes);
-app.use("/incidencias", incidenciaRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use(errorHandler);
