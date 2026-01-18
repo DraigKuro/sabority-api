@@ -13,6 +13,7 @@ import menuRoutes from "./routes/menu";
 import promotionRoutes from "./routes/promotion";
 import tableRoutes from "./routes/table";
 import authRoutes from "./routes/auth";
+import orderRoutes from "./routes/order";
 
 import { errorHandler } from "./middlewares/errorHandler";
 
@@ -36,6 +37,7 @@ app.use("/menus", menuRoutes);
 app.use("/promotions", promotionRoutes);
 app.use("/tables", tableRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/orders", orderRoutes);
 
 app.use(errorHandler);
 

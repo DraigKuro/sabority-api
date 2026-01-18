@@ -32,3 +32,27 @@ export const deleteTable = asyncHandler(async (req: Request, res: Response) => {
     if (!deleted) throw ControllerError(404, "Mesa no encontrada");
     res.json({ message: "Mesa eliminada correctamente" });
 });
+
+export const callWaiter = asyncHandler(async (req: Request, res: Response) => {
+    const { uid } = req.params;
+    const table = await tableService.requestWaiter(uid);
+    if (!table) throw ControllerError(404, "Mesa no encontrada o inactiva");
+    
+    res.json({ success: true, message: "Camarero solicitado correctamente" });
+});
+
+export const requestBill = asyncHandler(async (req: Request, res: Response) => {
+    const { uid } = req.params;
+    const table = await tableService.requestBill(uid);
+    if (!table) throw ControllerError(404, "Mesa no encontrada o inactiva");
+    
+    res.json({ success: true, message: "Cuenta solicitada correctamente" });
+});
+
+export const clearTableAlerts = asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updated = await tableService.clearAlerts(id);
+    if (!updated) throw ControllerError(404, "Mesa no encontrada");
+    
+    res.json({ success: true, message: "Alertas limpiadas", table: updated });
+});

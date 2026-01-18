@@ -62,3 +62,40 @@ export const remove = async (id: string): Promise<TableDocument | null> => {
         throw ServiceError("Error al eliminar la mesa");
     }
 };
+
+export const requestWaiter = async (uid: string): Promise<TableDocument | null> => {
+    try {
+        return await Table.findOneAndUpdate(
+            { uid, activo: true, deletedAt: null },
+            { peticionCamarero: true },
+            { new: true }
+        );
+    } catch (err) {
+        throw ServiceError("Error al solicitar camarero");
+    }
+};
+
+export const requestBill = async (uid: string): Promise<TableDocument | null> => {
+    try {
+        return await Table.findOneAndUpdate(
+            { uid, activo: true, deletedAt: null },
+            { peticionCuenta: true },
+            { new: true }
+        );
+    } catch (err) {
+        throw ServiceError("Error al solicitar la cuenta");
+    }
+};
+
+export const clearAlerts = async (id: string): Promise<TableDocument | null> => {
+    try {
+        if (!Types.ObjectId.isValid(id)) return null;
+        return await Table.findByIdAndUpdate(
+            id,
+            { peticionCamarero: false, peticionCuenta: false },
+            { new: true }
+        );
+    } catch (err) {
+        throw ServiceError("Error al limpiar las alertas de la mesa");
+    }
+};

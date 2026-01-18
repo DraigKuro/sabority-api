@@ -1,24 +1,35 @@
 import { Schema, model, Document } from "mongoose";
 
-export type OrderStatus = "pending" | "confirmed" | "preparing" | "ready" | "served";
+export type OrderStatus =
+    | "pending"
+    | "confirmed"
+    | "preparing"
+    | "ready"
+    | "served";
+
+export type ItemType =
+    | "dish"
+    | "drink"
+    | "menu"
+    | "promotion";
+
+export interface OrderItem {
+    type: ItemType;
+    itemId: string;
+    quantity: number;
+    price?: number;
+    name?: string;
+}
 
 export interface OrderDocument extends Document {
     tableId: string;
-    items: Array<{
-        type: "dish" | "drink" | "menu" | "promotion";
-        itemId: string;
-        quantity: number;
-        selectedOptions?: {
-            entranteId?: string;
-            principalId?: string;
-            postreId?: string;
-            bebidaId?: string;
-        };
-    }>;
+    items: OrderItem[];
     status: OrderStatus;
     total: number;
     paidAt?: Date | null;
     deletedAt?: Date | null;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const orderSchema = new Schema<OrderDocument>(
@@ -44,11 +55,12 @@ const orderSchema = new Schema<OrderDocument>(
                     required: true,
                     min: 1,
                 },
-                selectedOptions: {
-                    entranteId: String,
-                    principalId: String,
-                    postreId: String,
-                    bebidaId: String,
+                price: {
+                    type: Number,
+                    min: 0,
+                },
+                name: {
+                    type: String,
                 },
                 _id: false,
             },
@@ -79,7 +91,7 @@ const orderSchema = new Schema<OrderDocument>(
 );
 
 orderSchema.index({ tableId: 1, status: 1 });
-orderSchema.index({ createdAt: -1 });
 orderSchema.index({ status: 1 });
+orderSchema.index({ createdAt: -1 });
 
 export const Order = model<OrderDocument>("Order", orderSchema);
