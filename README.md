@@ -56,9 +56,15 @@ La mayoría de colecciones implementan **soft delete** (campo `deletedAt` + `act
 Copia `.env.example` a `.env` y ajusta los valores:
 
 ```
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/sabority
+NODE_ENV=development
+PORT=4000
+MONGO_URI=mongodb://localhost:27017/Proyecto
 STORAGE_TYPE=local
+AWS_ID=xxxxxxxx
+AWS_KEY=yyyyyyyy
+AWS_REGION=us-east-1
+AWS_BUCKET=mi-bucket
+JWT_SECRET=testsecretkey_saborify
 ```
 
 ## Instalación
